@@ -5,14 +5,24 @@
  */
 package com.jocimar.bookstore.domain;
 
+import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  *
  * @author F5078775
  */
-public class Livro {
+@Entity
+public class Livro implements  Serializable{
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String titulo;
     private String nomeAutor;
@@ -20,6 +30,8 @@ public class Livro {
     
     
     
+    @ManyToOne
+    @JoinColumn(name="categoria_id",referencedColumnName = "id")
     private Categoria categoria;
 
     public Livro() {
