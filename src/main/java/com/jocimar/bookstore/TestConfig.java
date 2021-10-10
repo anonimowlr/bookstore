@@ -7,6 +7,7 @@ package com.jocimar.bookstore;
 
 import com.jocimar.bookstore.service.DbService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
@@ -20,5 +21,14 @@ public class TestConfig {
     
     @Autowired
     private DbService dbService;
+    
+    @Bean
+    public void instaciaBaseDados(){
+        this.dbService.instanciaBaseDados();
+    }
+    
+    
+    
+    
     
 }
