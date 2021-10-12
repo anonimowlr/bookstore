@@ -5,6 +5,7 @@
  */
 package com.jocimar.bookstore.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ public class Categoria implements Serializable{
     private String nome;
     private String descricao;
     
-    
+   
     @OneToMany(mappedBy = "categoria")
     private List<Livro> livros = new ArrayList<>();
 
