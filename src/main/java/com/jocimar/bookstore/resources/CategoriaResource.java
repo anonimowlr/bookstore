@@ -6,7 +6,10 @@
 package com.jocimar.bookstore.resources;
 
 import com.jocimar.bookstore.domain.Categoria;
+import com.jocimar.bookstore.dtos.CategoriaDto;
 import com.jocimar.bookstore.service.CategoriaService;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +37,14 @@ public class CategoriaResource {
        return ResponseEntity.ok().body(categoria);
     
         
+    }
+    
+    @GetMapping
+    public ResponseEntity<List<CategoriaDto>> buscarTodasCategorias(){
+        List<Categoria> categorias = categoriaService.buscarTodasCategorias();
+        List<CategoriaDto> categoriasDto = categorias.stream().map(categoria-> new CategoriaDto(categoria)).collect(Collectors.toList());
+        return ResponseEntity.ok().body(categoriasDto);
+         
     }
     
     
