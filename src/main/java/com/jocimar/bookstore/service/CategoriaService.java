@@ -38,6 +38,12 @@ public class CategoriaService {
         
     }
     
+    public Categoria criarCategoria(Categoria categoria){
+        
+        return categoriaRepository.save(categoria);
+        
+    }
+    
     
     
 }

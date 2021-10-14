@@ -8,15 +8,20 @@ package com.jocimar.bookstore.resources;
 import com.jocimar.bookstore.domain.Categoria;
 import com.jocimar.bookstore.dtos.CategoriaDto;
 import com.jocimar.bookstore.service.CategoriaService;
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.servlet.Servlet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 /**
  *
@@ -47,5 +52,13 @@ public class CategoriaResource {
          
     }
     
+    @PostMapping
+    public ResponseEntity<Categoria> criarCategoria(@RequestBody Categoria categoria){
+        
+        categoria = categoriaService.criarCategoria(categoria);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{/id}").buildAndExpand(categoria.getId()).toUri();
+        return ResponseEntity.created(uri).body(categoria);
+        
+    }
     
 }
