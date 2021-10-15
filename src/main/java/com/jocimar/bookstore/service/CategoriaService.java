@@ -6,6 +6,7 @@
 package com.jocimar.bookstore.service;
 
 import com.jocimar.bookstore.domain.Categoria;
+import com.jocimar.bookstore.dtos.CategoriaDto;
 import com.jocimar.bookstore.repositories.CategoriaRepository;
 import com.jocimar.bookstore.service.exceptions.ObjectNotFoundException;
 import java.util.List;
@@ -39,9 +40,18 @@ public class CategoriaService {
     }
     
     public Categoria criarCategoria(Categoria categoria){
+        categoria.setId(null);
         
         return categoriaRepository.save(categoria);
         
+    }
+
+    public Categoria atualizar(Integer id, CategoriaDto catDto) {
+        Categoria categoria = buscaCategoria(id);
+        
+        categoria.setDescricao(catDto.getDescricao());
+        categoria.setNome(catDto.getNome());
+        return categoriaRepository.save(categoria);
     }
     
     
