@@ -12,6 +12,7 @@ import com.jocimar.bookstore.service.exceptions.ObjectNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 /**
@@ -53,6 +54,16 @@ public class CategoriaService {
         categoria.setNome(catDto.getNome());
         return categoriaRepository.save(categoria);
     }
+
+    public void deletarCategoria(Integer id) {
+        Categoria categoria = buscaCategoria(id);
+        if(categoria!=null){
+            categoriaRepository.delete(categoria);
+        }
+
+
+    }
+    
     
     
     
