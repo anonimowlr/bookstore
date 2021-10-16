@@ -14,7 +14,11 @@ import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,6 +52,31 @@ public class LivroResource {
         List<LivroDto> livrosDto = livros.stream().map(livro->new LivroDto(livro)).collect(Collectors.toList());
         
         return ResponseEntity.ok().body(livrosDto);
+        
+    }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<Livro> atualizaLivro(@PathVariable Integer id, @RequestBody LivroDto livroDto){
+        Livro livroAtualizado = livroService.atualizarLivro(id,livroDto);
+        
+        return ResponseEntity.ok().body(livroAtualizado);
+        
+    }
+    @PatchMapping("/{id}")
+    public ResponseEntity<Livro> atualizaLivroParcial(@PathVariable Integer id, @RequestBody LivroDto livroDto){
+        Livro livroAtualizado = livroService.atualizarLivro(id,livroDto);
+        
+        return ResponseEntity.ok().body(livroAtualizado);
+        
+    }
+    
+    
+    @PostMapping
+    public ResponseEntity<Livro> criarLivro(@RequestParam(value = "categoria", defaultValue = "0") Integer id_cat, @RequestBody Livro livro){
+        
+        livro = livroService.criarLivro(id_cat,livro);
+        
+        return ResponseEntity.ok().body(livro);
         
     }
     

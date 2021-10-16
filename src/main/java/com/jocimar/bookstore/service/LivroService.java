@@ -7,6 +7,7 @@ package com.jocimar.bookstore.service;
 
 import com.jocimar.bookstore.domain.Categoria;
 import com.jocimar.bookstore.domain.Livro;
+import com.jocimar.bookstore.dtos.LivroDto;
 import com.jocimar.bookstore.repositories.CategoriaRepository;
 import com.jocimar.bookstore.repositories.LivroRepository;
 import com.jocimar.bookstore.service.exceptions.ObjectNotFoundException;
@@ -44,6 +45,30 @@ public class LivroService {
         return livroRepository.findAllByCategoria(id_categoria);
 
 
+
+    }
+
+    public Livro atualizarLivro(Integer id, LivroDto livroDto) {
+        Livro livro = buscarLivro(id);
+        
+       livro.setTitulo(livroDto.getTitulo());
+       livro.setNomeAutor(livroDto.getNomeAutor());
+       livro.setTexto(livroDto.getTexto());
+       
+       return livroRepository.save(livro);
+
+
+    }
+
+    public Livro criarLivro(Integer id_cat, Livro livro) {
+        
+        livro.setId(null);
+        
+        Categoria cat = categoriaService.buscaCategoria(id_cat);
+        livro.setCategoria(cat);
+        
+        return livroRepository.save(livro);
+        
 
     }
     
