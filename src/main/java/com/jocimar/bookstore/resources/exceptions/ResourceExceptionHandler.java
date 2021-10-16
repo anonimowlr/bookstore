@@ -5,6 +5,7 @@
  */
 package com.jocimar.bookstore.resources.exceptions;
 
+import com.jocimar.bookstore.service.exceptions.ViolacaoIntegridadeException;
 import com.jocimar.bookstore.service.exceptions.ObjectNotFoundException;
 import javax.servlet.ServletRequest;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,11 @@ public class ResourceExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(standardError);
     }
     
-    
+     @ExceptionHandler(ViolacaoIntegridadeException.class)
+    public ResponseEntity<StandardError> integridadeViolada(ViolacaoIntegridadeException e,ServletRequest request){
+        StandardError standardError = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), e.getMessage());
+   
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(standardError);
+    }
     
 }

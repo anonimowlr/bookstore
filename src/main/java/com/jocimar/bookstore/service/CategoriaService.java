@@ -9,10 +9,11 @@ import com.jocimar.bookstore.domain.Categoria;
 import com.jocimar.bookstore.dtos.CategoriaDto;
 import com.jocimar.bookstore.repositories.CategoriaRepository;
 import com.jocimar.bookstore.service.exceptions.ObjectNotFoundException;
+import com.jocimar.bookstore.service.exceptions.ViolacaoIntegridadeException;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -57,9 +58,13 @@ public class CategoriaService {
 
     public void deletarCategoria(Integer id) {
         Categoria categoria = buscaCategoria(id);
-        if(categoria!=null){
+        try {
+            
             categoriaRepository.delete(categoria);
-        }
+        } catch (DataIntegrityViolationException e) {
+            throw  new ViolacaoIntegridadeException("Violação de integridade. Categoria não pode ser deletado, possui livros associados!!");
+        } 
+        
 
 
     }
