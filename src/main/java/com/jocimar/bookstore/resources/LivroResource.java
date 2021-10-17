@@ -11,9 +11,10 @@ import com.jocimar.bookstore.service.LivroService;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.hibernate.mapping.Collection;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -30,6 +31,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
  *
  * @author F5078775
  */
+@CrossOrigin("*")
 @RestController
 @RequestMapping(value="/livros") // o "value" é opcional
 public class LivroResource {
@@ -59,14 +61,14 @@ public class LivroResource {
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<Livro> atualizaLivro(@PathVariable Integer id, @RequestBody LivroDto livroDto){
+    public ResponseEntity<Livro> atualizaLivro(@PathVariable Integer id,@Valid @RequestBody LivroDto livroDto){
         Livro livroAtualizado = livroService.atualizarLivro(id,livroDto);
         
         return ResponseEntity.ok().body(livroAtualizado);
         
     }
     @PatchMapping("/{id}")
-    public ResponseEntity<Livro> atualizaLivroParcial(@PathVariable Integer id, @RequestBody LivroDto livroDto){
+    public ResponseEntity<Livro> atualizaLivroParcial(@PathVariable Integer id,@Valid @RequestBody LivroDto livroDto){
         Livro livroAtualizado = livroService.atualizarLivro(id,livroDto);
         
         return ResponseEntity.ok().body(livroAtualizado);
@@ -75,7 +77,7 @@ public class LivroResource {
     
     
     @PostMapping
-    public ResponseEntity<Livro> criarLivro(@RequestParam(value = "categoria", defaultValue = "0") Integer id_cat, @RequestBody Livro livro){
+    public ResponseEntity<Livro> criarLivro(@RequestParam(value = "categoria", defaultValue = "0") Integer id_cat, @Valid @RequestBody Livro livro){
         
         livro = livroService.criarLivro(id_cat,livro);
         

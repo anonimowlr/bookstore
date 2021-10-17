@@ -14,6 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Length;
 
 /**
  *
@@ -25,7 +27,11 @@ public class Livro implements  Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Length(min = 5,max = 45,message = "{titulo fora do tamamho}")
+    @NotEmpty(message = "{campo titulo nao pode ser nulo}")
     private String titulo;
+    @Length(min = 5,max = 100,message = "{nome autor fora do tamamho}")
+    @NotEmpty(message = "{campo nomeAutor nao pode ser nulo}")
     private String nomeAutor;
     private String texto;
     

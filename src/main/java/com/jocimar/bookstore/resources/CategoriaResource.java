@@ -15,6 +15,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +30,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
  *
  * @author F5078775
  */
+@CrossOrigin("*")
 @RestController
 @RequestMapping(value="/categorias")
 public class CategoriaResource {
@@ -64,7 +66,7 @@ public class CategoriaResource {
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<CategoriaDto> atualizaCategoria(@PathVariable Integer id, @RequestBody CategoriaDto catDto){
+    public ResponseEntity<CategoriaDto> atualizaCategoria(@PathVariable Integer id,@Valid @RequestBody CategoriaDto catDto){
         
         Categoria categoriaAtualizada = categoriaService.atualizar(id,catDto);
         

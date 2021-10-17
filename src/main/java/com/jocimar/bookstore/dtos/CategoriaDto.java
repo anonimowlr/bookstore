@@ -7,6 +7,8 @@ package com.jocimar.bookstore.dtos;
 
 import com.jocimar.bookstore.domain.Categoria;
 import java.io.Serializable;
+import javax.validation.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Length;
 
 /**
  *
@@ -15,6 +17,8 @@ import java.io.Serializable;
 public class CategoriaDto  implements Serializable{
     
     private Integer id;
+    @Length(min = 5,max = 45,message = "{fora do tamamho}")
+    @NotEmpty(message = "{campo nao pode ser nulo}")
     private String nome;
     private String descricao;
 

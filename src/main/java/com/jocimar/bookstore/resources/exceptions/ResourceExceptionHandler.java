@@ -11,6 +11,8 @@ import com.jocimar.bookstore.service.exceptions.ObjectNotFoundException;
 import javax.servlet.ServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -42,4 +44,21 @@ public class ResourceExceptionHandler {
    
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(standardError);
     }
+    
+     @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<StandardError> erroValidacao(MethodArgumentNotValidException e,ServletRequest request){
+        ValidationError erroValidacao = new ValidationError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "Erro na validação dos campos:");
+   
+            for(FieldError x : e.getBindingResult().getFieldErrors()){
+                
+                erroValidacao.adicionaErro(x.getField(), x.getDefaultMessage());
+                
+            }
+        
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erroValidacao);
+    }
+    
+    
+    
+    
 }
