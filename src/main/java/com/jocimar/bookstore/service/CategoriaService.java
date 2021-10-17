@@ -8,6 +8,7 @@ package com.jocimar.bookstore.service;
 import com.jocimar.bookstore.domain.Categoria;
 import com.jocimar.bookstore.dtos.CategoriaDto;
 import com.jocimar.bookstore.repositories.CategoriaRepository;
+import com.jocimar.bookstore.service.exceptions.DemaisExcepetions;
 import com.jocimar.bookstore.service.exceptions.ObjectNotFoundException;
 import com.jocimar.bookstore.service.exceptions.ViolacaoIntegridadeException;
 import java.util.List;
@@ -44,7 +45,9 @@ public class CategoriaService {
     public Categoria criarCategoria(Categoria categoria){
         categoria.setId(null);
         
-        return categoriaRepository.save(categoria);
+             return categoriaRepository.save(categoria);
+       
+       
         
     }
 

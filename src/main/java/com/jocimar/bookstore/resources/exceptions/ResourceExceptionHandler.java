@@ -5,6 +5,7 @@
  */
 package com.jocimar.bookstore.resources.exceptions;
 
+import com.jocimar.bookstore.service.exceptions.DemaisExcepetions;
 import com.jocimar.bookstore.service.exceptions.ViolacaoIntegridadeException;
 import com.jocimar.bookstore.service.exceptions.ObjectNotFoundException;
 import javax.servlet.ServletRequest;
@@ -35,4 +36,10 @@ public class ResourceExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(standardError);
     }
     
+    @ExceptionHandler(DemaisExcepetions.class)
+    public ResponseEntity<StandardError> demaisExcecoes(DemaisExcepetions e,ServletRequest request){
+        StandardError standardError = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), e.getMessage());
+   
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(standardError);
+    }
 }

@@ -8,11 +8,13 @@ package com.jocimar.bookstore.resources;
 import com.jocimar.bookstore.domain.Livro;
 import com.jocimar.bookstore.dtos.LivroDto;
 import com.jocimar.bookstore.service.LivroService;
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 /**
  *
@@ -76,8 +79,18 @@ public class LivroResource {
         
         livro = livroService.criarLivro(id_cat,livro);
         
-        return ResponseEntity.ok().body(livro);
+        URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/livros/{id}").buildAndExpand(livro.getId()).toUri();
         
+        return ResponseEntity.created(uri).build();
+        
+    }
+    
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarLivro(@PathVariable Integer id){
+        livroService.deletarLivro(id);
+        
+        return ResponseEntity.noContent().build();
     }
     
 }

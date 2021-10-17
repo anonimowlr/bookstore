@@ -11,7 +11,7 @@ import com.jocimar.bookstore.service.CategoriaService;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.servlet.Servlet;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -55,11 +55,11 @@ public class CategoriaResource {
     }
     
     @PostMapping
-    public ResponseEntity<Categoria> criarCategoria(@RequestBody Categoria categoria){
+    public ResponseEntity<Categoria> criarCategoria(@Valid @RequestBody Categoria categoria){
         
         categoria = categoriaService.criarCategoria(categoria);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{/id}").buildAndExpand(categoria.getId()).toUri();
-        return ResponseEntity.created(uri).body(categoria);
+        return ResponseEntity.created(uri).build();
         
     }
     

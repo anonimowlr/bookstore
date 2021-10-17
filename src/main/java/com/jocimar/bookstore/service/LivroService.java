@@ -10,11 +10,13 @@ import com.jocimar.bookstore.domain.Livro;
 import com.jocimar.bookstore.dtos.LivroDto;
 import com.jocimar.bookstore.repositories.CategoriaRepository;
 import com.jocimar.bookstore.repositories.LivroRepository;
+import com.jocimar.bookstore.service.exceptions.DemaisExcepetions;
 import com.jocimar.bookstore.service.exceptions.ObjectNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 /**
  *
@@ -68,6 +70,19 @@ public class LivroService {
         livro.setCategoria(cat);
         
         return livroRepository.save(livro);
+        
+
+    }
+ 
+   
+    public void deletarLivro(Integer id) {
+        Livro livro = buscarLivro(id);
+        
+        try {
+            livroRepository.delete(livro);
+        } catch (Exception e) {
+            throw  new DemaisExcepetions("Erro na deleção :" + e.getMessage());
+        }
         
 
     }
