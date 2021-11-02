@@ -7,8 +7,10 @@ package com.jocimar.bookstore.service;
 
 import com.jocimar.bookstore.domain.Categoria;
 import com.jocimar.bookstore.domain.Livro;
+import com.jocimar.bookstore.domain.Task;
 import com.jocimar.bookstore.repositories.CategoriaRepository;
 import com.jocimar.bookstore.repositories.LivroRepository;
+import com.jocimar.bookstore.repositories.TaskRepository;
 import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,12 +26,16 @@ public class DbService {
     private CategoriaRepository categoriaRepository;
     @Autowired
     private LivroRepository livroRepository;
+    @Autowired
+    private TaskRepository taskRepository;
 
     public void instanciaBaseDados() {
         Categoria cat1 = new Categoria(null, "Informatica", "Livros de TI");
         Categoria cat2 = new Categoria(null, "Ficcção Científica", "Ficção Científica");
         Categoria cat3 = new Categoria(null, "Biografias", "Livros de Biografias");
 
+        Task task = new Task(null,"nova tarefa",true,"nova tarefa de teste");
+        
         Livro l1 = new Livro(null, "Clean Code", "Robert Martin", "Loren Ipsun", cat1);
         Livro l2 = new Livro(null, "Engenharia de software", "Louis V. Gerstner", "Loren Ipsun", cat1);
         Livro l3 = new Livro(null, "The Time Machine", "H. G. Wells", "Loren Ipsun", cat2);
@@ -39,6 +45,8 @@ public class DbService {
         cat1.getLivros().addAll(Arrays.asList(l1, l2));
         cat2.getLivros().addAll(Arrays.asList(l3, l4, l5));
 
+        
+        taskRepository.saveAll(Arrays.asList(task));
         categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
         livroRepository.saveAll(Arrays.asList(l1, l2, l3, l4, l5));
 
