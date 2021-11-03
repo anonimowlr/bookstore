@@ -46,7 +46,7 @@ public class DbService {
         cat2.getLivros().addAll(Arrays.asList(l3, l4, l5));
 
         
-        taskRepository.saveAll(Arrays.asList(task));
+        
         categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
         livroRepository.saveAll(Arrays.asList(l1, l2, l3, l4, l5));
 
